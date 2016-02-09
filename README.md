@@ -11,7 +11,7 @@ Django=1.5.1 (pip install Django=1.5.1) [https://www.djangoproject.com/]
 requests (pip install requests) [http://docs.python-requests.org/en/latest/]
 
 ### Settings
-Change the following parameters in fusion-interface/settings.py
+Change the following parameters in `fusion-interface/settings.py`
 
 BASEURL= base url of your lucidworks installation, such as **'http://ist441.ist.psu.edu:8764'** 
 
