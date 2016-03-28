@@ -165,7 +165,7 @@ LOGGING = {
     }
 }
 
-BASEURL='http://127.0.0.1:8764'
-COLLECTION='giles-crawl1'
+BASEURL='http://127.0.0.1:8814'
+COLLECTION='Crawl'
 USERNAME='admin'
-PASSWORD='TeamAdmin123'
+PASSWORD='team5password'
