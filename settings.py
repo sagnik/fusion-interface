@@ -166,6 +166,6 @@ LOGGING = {
 }
 
 BASEURL='http://127.0.0.1:8814'
-COLLECTION='Crawl'
-USERNAME='admin'
-PASSWORD='team5password'
+COLLECTION=''
+USERNAME=''
+PASSWORD='t' 
