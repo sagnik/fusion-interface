@@ -52,14 +52,27 @@ font-family:Arial, Helvetica, sans-serif;
 
 <div style="position: absolute; top: 10%; left: 25%; width: 50%; height: 50%;">
 {% load staticfiles %}
-<div>  <img src="{% static "rsc/fusion-logo-resized.png" %}" alt="fusion logo"/> </div>
+<div>  <img src="{% static "rsc/fusion-logo-resized.png" %}" width="200" height="200" alt="fusion logo"/> </div>
 <div style="padding-top:15px">
 <form method="post" action="../">
+{% comment "For this group, we need to have a drop down" %}
   {% csrf_token %} 
   <input type="text" name="q" id="search_box" class='search_box'/>
   <input type="hidden" name="type" id="q_type" value="Figures"/>
   <input type="submit" value="Search" class="search_button" /><br />
   <span style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;"><b>Eg :</b> Giles, Search Engine </span>
+{% endcomment %}
+  {% csrf_token %} 
+  <input type="text" name="q" id="search_box" class='search_box'/>
+  <input type="hidden" name="type" id="q_type" value="Figures"/>
+  <select name="collectionlist">
+	<option value="Applications">Applications</option>
+ 	<option value="Research">Research</option>
+  	<option value="Teaching">Teaching</option>
+ </select>
+  <input type="submit" value="Search" class="search_button" /><br />
+  <span style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;"><b>Eg :</b> Giles, Search Engine </span>
+
 </form>
 
 </div>	

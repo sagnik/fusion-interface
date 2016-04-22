@@ -10,12 +10,23 @@ from settings import *
 ERR_QUERY_NOT_FOUND='<h1>Query not found</h1>'
 ERR_IMG_NOT_AVAILABLE='The requested result can not be shown now'
 
+collectiondict={
+'Applications':'Applications',
+'Research':'Research',
+'Teaching':'Teaching' 
+}
+
 def home(request):
     if request.method == 'POST':
         q = request.POST.get('q',None)
+        selectype=request.POST.get('collectionlist','Applications')
         start=request.POST.get('start',0)
+        print "here",selectype
+        if selectype not in collectiondict:
+            return render_to_response('rsc/error.html',{'errormessage':'Please select a collection'}\
+            ,context_instance=RequestContext(request))	
         if q != None and len(q) > 2:
-            return search(request,q,start)
+            return search(request,selectype,q,start)
         else:
             if q==None:
                 return render_to_response('rsc/index.html',{'errormessage':None},context_instance=RequestContext(request))
@@ -25,14 +36,14 @@ def home(request):
     else: # it's a get request, can come from two sources. if start=0, or start not in GET dictionary, someone is requesting the page 
           #for the first time, else  something like "show more" 
        start=int(request.GET.get('start',0))
+       collection=request.GET.get('collection',None)
        query=request.GET.get('q',None)
-       if start==0 or query==None:
+       if start==0 or collection==None or query==None:
            return render_to_response('rsc/index.html',context_instance=RequestContext(request))
        else:
-           return search(request,query,start)
-                
+           return search(request,collection,query,start)                
 
-def search(request,query,start):
+def search(request,COLLECTION,query,start):
         apibaseurl=BASEURL+"/api/apollo/solr/"+COLLECTION+'/select?q='+query+"&fl=title,content,id,url,keywords&wt=json&"
         cred=(USERNAME,PASSWORD)
         hlstr='hl=true&hl.fl=keywords,content&hl.simple.pre=<span style="color:blue">&hl.simple.post=</span>&hl.usePhraseHighlighter=true&hl.highlightMultiTerm=true'
@@ -74,8 +85,9 @@ def search(request,query,start):
                         f.lesscontent=hlresults[result['id']]['content'][0].encode("utf-8")
                     HTMLResults.append(f)
                 return render_to_response('rsc/htmlresult.html', {'results':HTMLResults ,'q': query,\
-							  'total':totalresultsNumFound, 'i':str(start+1)\
-							  , 'j':str(len(results)+start) },context_instance=RequestContext(request))
+							  'total':totalresultsNumFound,'i':str(start+1),'j':str(len(results)+start),\
+                                                          'collection':COLLECTION},\
+                                                          context_instance=RequestContext(request))
             else:
                return render_to_response('rsc/error.html',{'errormessage':'Your search returned zero results, please try another query'}\
             ,context_instance=RequestContext(request))
