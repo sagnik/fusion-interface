@@ -21,7 +21,7 @@ def home(request):
         q = request.POST.get('q',None)
         selectype=request.POST.get('collectionlist','Applications')
         start=request.POST.get('start',0)
-        print "here",selectype
+        print selectype
         if selectype not in collectiondict:
             return render_to_response('rsc/error.html',{'errormessage':'Please select a collection'}\
             ,context_instance=RequestContext(request))	
